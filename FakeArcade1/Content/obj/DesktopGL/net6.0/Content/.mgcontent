@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/bullet_sprite_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/cat_flower.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/cloaked_figure.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/deadCat.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/deadChainsaw.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/deadPlanet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/deadShip.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/deadSnake.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/deafeat.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/export_spike_ship.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/gameover.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/page1.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/page2.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/page3.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/planet_battery_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/pushit.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/realProtagonist.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/realSaw.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/realSawLeft.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/snake_dormant_sheet2.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/snake_sheet_right.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/snake_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/success.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/testBlock.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/theWeapon_sheet.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/tiles/genericBlock.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/tiles/genericTile.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>defeat.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

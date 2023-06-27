@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/chainsww.gif","C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/bin/DesktopGL/chainsww.xnb","TextureProcessor","Texture2DContent",1923,41045,0.2311847
+"C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/cloaked_figure.png","C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/bin/DesktopGL/cloaked_figure.xnb","TextureProcessor","Texture2DContent",7565,921685,0.0564895
+"C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/File.xml","C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/bin/DesktopGL/File.xnb","PassThroughProcessor","Object",144,177,0.0645361
+"C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/testBlock.png","C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/bin/DesktopGL/testBlock.xnb","TextureProcessor","Texture2DContent",220,16469,0.0063179
