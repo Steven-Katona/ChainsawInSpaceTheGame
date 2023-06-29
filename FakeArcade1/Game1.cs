@@ -20,7 +20,7 @@ namespace FakeArcade1
         Rectangle boxingRect;
         private Level currentLevel;
         bool gameover = false;
-        int spawn_count = 5;
+        int spawn_count = 1;
 
         int[][] levels = new int[10][];
 
