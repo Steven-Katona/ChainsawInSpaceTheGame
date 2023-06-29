@@ -20,6 +20,7 @@ namespace FakeArcade1
         Rectangle boxingRect;
         private Level currentLevel;
         bool gameover = false;
+        int spawn_count = 5;
 
         int[][] levels = new int[10][];
 
@@ -123,7 +124,7 @@ namespace FakeArcade1
 
 
             currentLeveldata = levels[levelCounter];
-            currentLevel = new(Services, currentLeveldata , _graphics, (int)Math.Floor(maxWidth * .50d), (int)Math.Floor(maxHeight* .50d)); //fix this shit yo!
+            currentLevel = new(Services, currentLeveldata , _graphics, (int)Math.Floor(maxWidth * .50d), (int)Math.Floor(maxHeight* .50d),spawn_count, 1.0f); //fix this shit yo!
             
             Window.AllowUserResizing= true;
 
@@ -193,7 +194,7 @@ namespace FakeArcade1
                     float ypos = currentLevel.getPlayer().getPosition().Y;
                     currentLevel.Dispose();
                     currentLeveldata = levels[levelCounter];
-                    currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos);
+                    currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count ,1.0f);
                 }
             }
 
@@ -202,7 +203,7 @@ namespace FakeArcade1
                 float xpos = .50f * maxWidth;
                 float ypos = .50f * maxHeight;
                 currentLevel.Dispose();
-                currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos);
+                currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count ,1.0f);
             }
 
             

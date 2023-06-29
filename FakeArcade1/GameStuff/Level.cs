@@ -25,12 +25,12 @@ namespace FakeArcade1.GameStuff
         private static List<Sprite> to_be_Removed;
         private static List<Sprite> to_be_Added;
         ContentManager content;
-        private double time_current;
-        private double target_time;
+        private double[] time_current;
+        private double[] target_time;
         public bool level_done = false;
-        bool more_to_spawn = true;
+        bool[] more_to_spawn;
         bool final_stretch = false;
-        Queue<int> monster_Spawns;
+        Queue<int>[] extra_Spawns;
         bool check_Facing = false;
         int maxWidth;
         int maxHeight;
@@ -40,20 +40,22 @@ namespace FakeArcade1.GameStuff
         int backgroundCounter;
         private bool resetLevel = false;
         Rectangle backgroundRect;
- 
-
-        
-
+        int spawnSettings;
+        double wait_time;
 
 
 
 
-        public Level(IServiceProvider service, int[] monster_data, GraphicsDeviceManager _graphics, int x, int y)
+
+
+
+
+
+        public Level(IServiceProvider service, int[] monster_data, GraphicsDeviceManager _graphics, int x, int y, int spawnMultiplier, float ratio)
         {
             content = new(service , "Content");
             Texture2D chainsaw;
             chainsaw = content.Load<Texture2D>("realSaw");
-            monster_Spawns = new Queue<int>();
             enemy_squad = new List<Sprite>();
             to_be_Removed = new List<Sprite>();
             to_be_Added= new List<Sprite>();
@@ -66,13 +68,37 @@ namespace FakeArcade1.GameStuff
             backgroundTimer = 0d;
             backgroundCounter = 0;
             backgroundRect = new(0,0,maxWidth,maxHeight);
+            spawnSettings = spawnMultiplier;
+
+            extra_Spawns = new Queue<int>[spawnSettings];
+            for(int initilize = 0; initilize < spawnSettings; initilize++)
+            {
+                extra_Spawns[initilize] = new Queue<int>();
+            }
+
+            more_to_spawn = new bool[spawnSettings];
+            target_time = new double[spawnSettings];
+            time_current = new double[spawnSettings];
+            wait_time = 7.0;
+
 
             foreach (int item in monster_data)
             {
-                monster_Spawns.Enqueue(item);
+
+                for(int extra = 0; extra < spawnSettings; extra++)
+                {    
+                    int value = item;
+                    extra_Spawns[extra].Enqueue(value);
+                }
+
             }
 
-            target_time = monster_Spawns.Dequeue();
+            for (int spawn = 0; spawn < spawnSettings; spawn++)
+            {
+                target_time[spawn] = extra_Spawns[spawn].Dequeue() + spawn;
+                more_to_spawn[spawn] = true;
+            }
+
             mainCharacter = new Player(chainsaw, x, y, 160, 64, .20f, 3);
             Texture2D weapon = content.Load<Texture2D>("theWeapon_sheet");
             mainCharacter.setUpWeapon(weapon, maxWidth, maxHeight);
@@ -94,7 +120,19 @@ namespace FakeArcade1.GameStuff
 
         public bool areEnemiesRemaining()
         {
-            if (enemy_squad.Count == 0 && monster_Spawns.Count == 0)
+            bool any_more_monsters = false;
+
+
+            foreach(var spawner in more_to_spawn)
+            {
+                if(spawner == true)
+                {
+                    any_more_monsters = true;
+                }
+            }
+
+
+            if (enemy_squad.Count == 0 && !any_more_monsters)
                 return false;
             else
                 return true;
@@ -103,7 +141,28 @@ namespace FakeArcade1.GameStuff
    
         public void Update(GameTime gameTime,KeyboardState keyboardStat)
         {
-            time_current += (double)gameTime.ElapsedGameTime.TotalSeconds;
+            int finale = 0;
+            for (int spawn = 0; spawn < spawnSettings; spawn++)
+            {
+                time_current[spawn] += (double)gameTime.ElapsedGameTime.TotalSeconds;
+                finale += extra_Spawns[spawn].Count();
+
+                if (time_current[spawn] > target_time[spawn] && more_to_spawn[spawn])
+                {
+                    Dynamic_Monster_Spawn(extra_Spawns[spawn].Dequeue(), extra_Spawns[spawn].Dequeue(), extra_Spawns[spawn].Dequeue());
+
+                    if (extra_Spawns[spawn].Count() != 0)
+                    {
+                        target_time[spawn] = extra_Spawns[spawn].Dequeue() + spawn;
+                        time_current[spawn] = 0;
+                    }
+                    else
+                    {
+
+                        more_to_spawn[spawn] = false;
+                    }
+                }
+            }
 
             if(mainCharacter.Dead() && keyboardStat.IsKeyDown(Keys.R))
             {
@@ -133,45 +192,32 @@ namespace FakeArcade1.GameStuff
                 }
             }
 
-            if(mainCharacter.Dead() && more_to_spawn)
+
+            if (finale == 0 && enemy_squad.Count == 0)
             {
-                Animation newSaw = new(content.Load<Texture2D>("deadChainsaw"), 100.0f, false, 255, 1);
-                mainCharacter.givePlayerAnimation(newSaw);
-                more_to_spawn = false;
-            }
-
-
-
-            if (time_current > target_time && more_to_spawn)
-            {
-                Dynamic_Monster_Spawn(monster_Spawns.Dequeue(), monster_Spawns.Dequeue(), monster_Spawns.Dequeue());
-
-                if (monster_Spawns.Count() != 0)
+                if(wait_time > 0)
                 {
-                    target_time = monster_Spawns.Dequeue();
-                    time_current = 0;
+                    wait_time -= gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 else
                 {
-                    more_to_spawn = false;
-                    //target_time = 10;
-                }      
+                    final_stretch = true;
+                }
+
+
+                if (final_stretch)
+                {
+                    level_done = true;
+                }
             }
 
-            if (enemy_squad.Count == 0 && !more_to_spawn && !final_stretch)
-            {
-                target_time = 10;
-                final_stretch = true;
-                time_current = 0;
-            }
 
-            if (time_current > target_time && !more_to_spawn && enemy_squad.Count == 0 && final_stretch)
-            {
-                level_done = true;
-            }
+
+
+
+
 
             mainCharacter.Update(gameTime, keyboardStat, maxWidth, maxHeight);
-
             foreach (Sprite enemy in enemy_squad)
             {
                 if (enemy as Projectile != null)
