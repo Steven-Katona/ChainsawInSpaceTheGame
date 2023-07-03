@@ -12,7 +12,7 @@ namespace FakeArcade1
     public class Game1 : Game
     {
 
-
+        bool inMenu = true;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         RenderTarget2D _nativeTarget;
@@ -29,6 +29,22 @@ namespace FakeArcade1
         Texture2D gameend;
         Texture2D pushQ;
         Texture2D pushW;
+
+        Texture2D menu_title;
+        Texture2D menu_spawn;
+        Texture2D menu_play;
+        Texture2D menu_how;
+        Texture2D menu_quit;
+        Texture2D menu_1;
+        Texture2D menu_2;
+        Texture2D menu_3;
+        Texture2D menu_4;
+        Texture2D menu_5;
+        Texture2D menu_6;
+        Texture2D menu_q;
+        Texture2D menu_w;
+        Texture2D menu_numkeys;
+        Texture2D menu_tile;
 
         Rectangle sucRec;
         Rectangle defRec;
@@ -66,6 +82,7 @@ namespace FakeArcade1
         float widthScale;
         float heightScale;
         float gameScale;
+        Mainmenu menu;
 
         float xOffset;
         float yOffset;
@@ -123,8 +140,7 @@ namespace FakeArcade1
             
 
 
-            currentLeveldata = levels[levelCounter];
-            currentLevel = new(Services, currentLeveldata , _graphics, (int)Math.Floor(maxWidth * .50d), (int)Math.Floor(maxHeight* .50d),spawn_count, 1.0f); //fix this shit yo!
+           
             
             Window.AllowUserResizing= true;
 
@@ -155,6 +171,24 @@ namespace FakeArcade1
             pushQ = Content.Load<Texture2D>("pushit");
             pushW = Content.Load<Texture2D>("pushit");
 
+            menu_title = Content.Load<Texture2D>("menuitem_title");
+            menu_play = Content.Load<Texture2D>("menuitem_playgame");
+            menu_spawn = Content.Load<Texture2D>("menuitem_spawn");
+            menu_how = Content.Load<Texture2D>("menuitem_howtoplay");
+            menu_quit = Content.Load<Texture2D>("menuitem_quit");
+            menu_1 = Content.Load<Texture2D>("menuitem_1");
+            menu_2 = Content.Load<Texture2D>("menuitem_2");
+            menu_3 = Content.Load<Texture2D>("menuitem_3");
+            menu_4 = Content.Load<Texture2D>("menuitem_4");
+            menu_5 = Content.Load<Texture2D>("menuitem_5");
+            menu_6 = Content.Load<Texture2D>("menuitem_6");
+            menu_q = Content.Load<Texture2D>("menuitem_q");
+            menu_w = Content.Load<Texture2D>("menuitem_w");
+            menu_numkeys = Content.Load<Texture2D>("menuitem_numkeys");
+            Texture2D[] menuPanels = { menu_play, menu_spawn, menu_how, menu_quit, menu_1, menu_2, menu_3, menu_4, menu_5, menu_6, menu_q, menu_w, menu_numkeys };
+            
+            menu = new(menuPanels, 1.0f, maxWidth, maxHeight);
+
             sucRec = new((int)Math.Floor(maxWidth*.50d - success.Width / 2.0d), (int)Math.Floor(maxHeight* .50d - success.Height / 2.0d), success.Width, success.Height);
             defRec = new((int)Math.Floor(maxWidth * .50d - defeat.Width / 2.0d), (int)Math.Floor(maxHeight * .50d - defeat.Height / 2.0d), defeat.Width, defeat.Height);
             gamRec = new((int)Math.Floor(maxWidth * .50d - gameend.Width / 2.0d), (int)Math.Floor(maxHeight * .50d - gameend.Height / 2.0d), gameend.Width, gameend.Height);
@@ -174,50 +208,64 @@ namespace FakeArcade1
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
+            }
 
             var kstate = Keyboard.GetState();
 
-            
-
-            if(currentLevel.level_done && levels.Length > levelCounter && !gameover)
+            if (inMenu)
             {
+                menu.Update(kstate,gameTime);
 
-                levelCounter += 1;
-                if (levelCount == levelCounter)
+                if(menu.startGame)
                 {
-                    gameover = true;
-                }
-                else
-                {
-                    float xpos = currentLevel.getPlayer().getPosition().X;
-                    float ypos = currentLevel.getPlayer().getPosition().Y;
-                    currentLevel.Dispose();
                     currentLeveldata = levels[levelCounter];
-                    currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count ,1.0f);
+                    currentLevel = new(Services, currentLeveldata, _graphics, (int)Math.Floor(maxWidth * .50d), (int)Math.Floor(maxHeight * .50d), spawn_count, 1.0f); 
+                    inMenu = false;
+                }
+
+                if(menu.exitGame)
+                {
+                    this.Exit();
                 }
             }
 
-            if(currentLevel.getPlayer().Dead() && currentLevel.RestartLevel())
+            if (!inMenu)
             {
-                float xpos = .50f * maxWidth;
-                float ypos = .50f * maxHeight;
-                currentLevel.Dispose();
-                currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count ,1.0f);
+                
+
+
+                if (currentLevel.level_done && levels.Length > levelCounter && !gameover)
+                {
+
+                    levelCounter += 1;
+                    if (levelCount == levelCounter)
+                    {
+                        gameover = true;
+                    }
+                    else
+                    {
+                        float xpos = currentLevel.getPlayer().getPosition().X;
+                        float ypos = currentLevel.getPlayer().getPosition().Y;
+                        currentLevel.Dispose();
+                        currentLeveldata = levels[levelCounter];
+                        currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count, 1.0f);
+                    }
+                }
+
+                if (currentLevel.getPlayer().Dead() && currentLevel.RestartLevel())
+                {
+                    float xpos = .50f * maxWidth;
+                    float ypos = .50f * maxHeight;
+                    currentLevel.Dispose();
+                    currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count, 1.0f);
+                }
+
+                currentLevel.Update(gameTime, kstate);
             }
 
-            
-
-
-            currentLevel.Update(gameTime, kstate);
-            
-            // TODO: Add your update logic here
-            //player.Update(gameTime,Keyboard.GetState(),GamePad.GetState(0), );
             base.Update(gameTime);
-
-
-            //levelDX . collision detection here?
-
         }
 
         protected override void Draw(GameTime gameTime)
@@ -227,53 +275,46 @@ namespace FakeArcade1
             
             _spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
+
             
-            /*Color[] data = new Color[currentLevel.getPlayer().getHurtBox().Width * currentLevel.getPlayer().getHurtBox().Height];
-            int maxDimension = currentLevel.getPlayer().getHurtBox().Width * currentLevel.getPlayer().getHurtBox().Height;
-            Texture2D rectText = new Texture2D(GraphicsDevice, currentLevel.getPlayer().getHurtBox().Width, currentLevel.getPlayer().getHurtBox().Height);
 
-            for (int i = 0; i < data.Length; i++)
+
+            if(inMenu)
             {
-                if((i <= currentLevel.getPlayer().getHurtBox().Width) || (i >= (maxDimension - currentLevel.getPlayer().getHurtBox().Width)) || (i % currentLevel.getPlayer().getHurtBox().Width == 0) || (i % currentLevel.getPlayer().getHurtBox().Width == currentLevel.getPlayer().getHurtBox().Width - 1))
+                menu.Draw(gameTime,_spriteBatch,1.0f,GraphicsDevice);
+                _spriteBatch.Draw(menu_title, new Vector2((maxWidth * .5f),0), Color.AliceBlue);
+            }
+
+
+            if (!inMenu)
+            {
+                currentLevel.Draw(gameTime, _spriteBatch, GraphicsDevice);
+
+                if (currentLevel.getPlayer().Dead())
                 {
-                    data[i] = Color.Yellow;
+                    _spriteBatch.Draw(defeat, defRec, Color.White);
                 }
-                
+
+                if (!currentLevel.areEnemiesRemaining() && !gameover)
+                {
+                    _spriteBatch.Draw(success, defRec, Color.White);
+                }
+
+                if (gameover)
+                {
+                    _spriteBatch.Draw(gameend, gamRec, Color.White);
+                }
+
+                if (currentLevel.getPlayer().getAttackStatus() <= 0d && !currentLevel.getPlayer().inCombat())
+                {
+                    _spriteBatch.Draw(pushQ, queRec, Color.White);
+                }
+
+                if (!currentLevel.getPlayer().activeWeapon && currentLevel.getPlayer().killCount >= 10)
+                {
+                    _spriteBatch.Draw(pushW, wueRec, Color.White);
+                }
             }
-
-            rectText.SetData(data);
-            var ColorPos = new Vector2(currentLevel.getPlayer().getHurtBox().X, currentLevel.getPlayer().getHurtBox().Y);
-
-
-            //_spriteBatch.Draw(player.myAnimation.Draw());
-            _spriteBatch.Draw(rectText, ColorPos, Color.White);*/
-            currentLevel.Draw(gameTime, _spriteBatch, GraphicsDevice);
-
-            if (currentLevel.getPlayer().Dead())
-            {
-                _spriteBatch.Draw(defeat, defRec, Color.White);
-            }
-
-            if (!currentLevel.areEnemiesRemaining() && !gameover)
-            {
-                _spriteBatch.Draw(success, defRec, Color.White);
-            }
-
-            if (gameover)
-            {
-                _spriteBatch.Draw(gameend, gamRec, Color.White);
-            }
-
-            if (currentLevel.getPlayer().getAttackStatus() <= 0d && !currentLevel.getPlayer().inCombat())
-            {
-                _spriteBatch.Draw(pushQ, queRec, Color.White);
-            }
-
-            if (!currentLevel.getPlayer().activeWeapon && currentLevel.getPlayer().killCount >= 10)
-            {
-                _spriteBatch.Draw(pushW, wueRec, Color.White);
-            }
-
             _spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
