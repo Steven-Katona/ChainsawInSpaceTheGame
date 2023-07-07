@@ -185,15 +185,20 @@ namespace FakeArcade1
             menu_q = Content.Load<Texture2D>("menuitem_q");
             menu_w = Content.Load<Texture2D>("menuitem_w");
             menu_numkeys = Content.Load<Texture2D>("menuitem_numkeys");
+            menu_tile = Content.Load<Texture2D>("menuitem_backgroundTile");
+
+
             Texture2D[] menuPanels = { menu_play, menu_spawn, menu_how, menu_quit, menu_1, menu_2, menu_3, menu_4, menu_5, menu_6, menu_q, menu_w, menu_numkeys };
-            
-            menu = new(menuPanels, 1.0f, maxWidth, maxHeight);
+            Texture2D cursor = Content.Load<Texture2D>("realSaw");
+            menu = new(menuPanels, 1.0f, maxWidth, maxHeight, cursor, menu_tile);
+
 
             sucRec = new((int)Math.Floor(maxWidth*.50d - success.Width / 2.0d), (int)Math.Floor(maxHeight* .50d - success.Height / 2.0d), success.Width, success.Height);
             defRec = new((int)Math.Floor(maxWidth * .50d - defeat.Width / 2.0d), (int)Math.Floor(maxHeight * .50d - defeat.Height / 2.0d), defeat.Width, defeat.Height);
             gamRec = new((int)Math.Floor(maxWidth * .50d - gameend.Width / 2.0d), (int)Math.Floor(maxHeight * .50d - gameend.Height / 2.0d), gameend.Width, gameend.Height);
             queRec = new(0, 0, pushQ.Width, pushQ.Height);
             wueRec = new(pushQ.Width, 0, pushQ.Width, pushQ.Height);
+
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _spriteBatch.Begin(transformMatrix: offsets);

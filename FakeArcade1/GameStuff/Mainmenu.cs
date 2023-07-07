@@ -17,15 +17,18 @@ namespace FakeArcade1.GameStuff
         private int currentSelection = 0;
         Texture2D[] menuItems;
         bool currentlyPressed = false;
-        bool selectionMade = false;
+        //bool selectionMade = false;
         public bool exitGame { get; set; }
         public bool startGame { get; set; }
         Keys currentKey;
         Vector2 startingLocation;
+        Vector2[] menuLocations;
+        Animation myCursor;
+        AnimationLogic cursorDraw;
         int maxW;
         int maxH;
         int spawning { get; set; }
-        public Mainmenu(Texture2D[] selections, float ratio, int maxWidth, int maxHeight) 
+        public Mainmenu(Texture2D[] selections, float ratio, int maxWidth, int maxHeight, Texture2D cursor, Texture2D background) 
         { 
             possibleSelection = new int[selections.Length];
             
@@ -42,29 +45,41 @@ namespace FakeArcade1.GameStuff
             exitGame = false;
             startGame = false;
             Keys currentKey = Keys.None;
+            myCursor = new(cursor, .20f, true, 160 ,3);
+            cursorDraw= new();
+            cursorDraw.animationPlay(myCursor);
+
+            menuLocations = new Vector2[6];
+
+            menuLocations[0] = new Vector2(maxW * .10f, maxH * .10f);
+            menuLocations[1] = new Vector2(maxW * .10f, maxH * .30f);
+            menuLocations[2] = new Vector2(maxW * .10f, maxH * .60f);
+            menuLocations[3] = new Vector2(maxW * .40f, maxH * .10f);
+            menuLocations[4] = new Vector2(maxW * .40f, maxH * .30f);
+            menuLocations[5] = new Vector2(maxW * .40f, maxH * .60f);
+
         }
 
         public void Update(KeyboardState keys, GameTime gameTime)
         {
-            if(keys.IsKeyDown(Keys.NumPad2) && !currentlyPressed)
+            if (keys.IsKeyDown(Keys.NumPad2) && !currentlyPressed)
             {
-                currentSelection = (currentSelection += 1) % possibleChoices;
-                currentlyPressed = true;
-                currentKey = Keys.NumPad2;
+                if (currentSelection < (startingChoice + possibleChoices))
+                {
+                    currentSelection = (currentSelection += 1);
+                    currentlyPressed = true;
+                    currentKey = Keys.NumPad2;
+                }
             }
 
             if(keys.IsKeyDown(Keys.NumPad8) && !currentlyPressed)
             {
-                if(currentSelection > 0)
+                if (currentSelection > startingChoice)
                 {
-                    currentSelection = (currentSelection -= 1) % possibleChoices + startingChoice;
+                    currentSelection -= 1;
+                    currentlyPressed = true;
+                    currentKey = Keys.NumPad8;
                 }
-                else
-                {
-                    currentSelection = possibleChoices - 1;
-                }
-                currentlyPressed = true;
-                currentKey = Keys.NumPad8;
             }
 
             if(keys.IsKeyDown(Keys.Enter) && !currentlyPressed)
@@ -72,6 +87,7 @@ namespace FakeArcade1.GameStuff
                 (int, int) options = getSelection(currentSelection);
                 possibleChoices = options.Item2;
                 startingChoice = options.Item1;
+                currentSelection = startingChoice;
                 currentlyPressed = true;
                 currentKey = Keys.Enter;
             }
@@ -88,34 +104,18 @@ namespace FakeArcade1.GameStuff
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, float ratio, GraphicsDevice _graphics)
         {
-            
-            for(int texture = startingChoice; texture < possibleChoices; texture++)
+            int locations = 0;
+            for(int texture = startingChoice; texture < startingChoice + possibleChoices; texture++)
             {
-
-                spriteBatch.Draw(menuItems[texture], new Vector2(startingLocation.X - menuItems[texture].Width/2.0f, startingLocation.Y - menuItems[texture].Height/2.0f), Color.White);
-                startingLocation.Y += maxH * .20f;
-            }
-
-            startingLocation.Y = maxH * .20f;
-
-            Color[] data = new Color[menuItems[currentSelection].Width * menuItems[currentSelection].Height];
-            int maxDimension = menuItems[currentSelection].Width * menuItems[currentSelection].Height;
-            Texture2D rectText = new Texture2D(_graphics, menuItems[currentSelection].Width, menuItems[currentSelection].Height);
-            for (int i = 0; i < data.Length; i++)
-            {
-                if( (i % menuItems[currentSelection].Width == 0) || (i % menuItems[currentSelection].Width == menuItems[currentSelection].Width - 1))
+                spriteBatch.Draw(menuItems[texture], menuLocations[locations], Color.White);
+                if (texture == currentSelection)
                 {
-                    data[i] = Color.Yellow;
+                    cursorDraw.Draw(gameTime, spriteBatch, menuLocations[locations], SpriteEffects.None);
                 }
-                //(i <= menuItems[currentSelection].Width) || (i >= (menuItems[currentSelection].Width)) ||
+                locations++;
             }
 
-            rectText.SetData(data);
-            var ColorPos = new Vector2(menuItems[currentSelection].Bounds.X, menuItems[currentSelection].Bounds.Y);
 
-
-
-            spriteBatch.Draw(rectText, ColorPos, Color.White);
         }
 
         public (int, int) getSelection(int selection)
@@ -140,11 +140,10 @@ namespace FakeArcade1.GameStuff
                 case 2:
                     
                     returnValue = 10;
-                    displayValue = 4;
+                    displayValue = 3;
                     break;
 
                 case 3:
-
                     returnValue = 2;
                     displayValue = 0;
                     exitGame = true;
@@ -189,13 +188,12 @@ namespace FakeArcade1.GameStuff
                 case 10:
                     returnValue = 0;
                     displayValue = 4;
-                    spawning = 1;
+         
                     break;
 
                 case 13:
                     returnValue = 0;
                     displayValue = 4;
-                    spawning = 1;
                     break;
 
 
