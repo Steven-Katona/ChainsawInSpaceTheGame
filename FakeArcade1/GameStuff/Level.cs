@@ -197,7 +197,7 @@ namespace FakeArcade1.GameStuff
             {
                 if(wait_time > 0)
                 {
-                    wait_time -= gameTime.ElapsedGameTime.TotalSeconds;
+                    wait_time -= gameTime.ElapsedGameTime.TotalSeconds; // let some time pass before entering the next level
                 }
                 else
                 {
@@ -220,7 +220,7 @@ namespace FakeArcade1.GameStuff
             mainCharacter.Update(gameTime, keyboardStat, maxWidth, maxHeight);
             foreach (Sprite enemy in enemy_squad)
             {
-                if (enemy as Projectile != null)
+                if (enemy as Projectile != null) // projectile hitbox logic
                 {
                     Projectile bull = (Projectile)enemy;
                     if (bull.getBounds().Intersects(mainCharacter.getBounds()) || bull.getBounds().Intersects(mainCharacter.getHurtBox()))

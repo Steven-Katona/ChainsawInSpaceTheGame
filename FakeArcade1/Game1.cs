@@ -29,6 +29,8 @@ namespace FakeArcade1
         Texture2D gameend;
         Texture2D pushQ;
         Texture2D pushW;
+        Texture2D pushR;
+        Texture2D pushE;
 
         Texture2D menu_title;
         Texture2D menu_spawn;
@@ -51,6 +53,8 @@ namespace FakeArcade1
         Rectangle gamRec;
         Rectangle queRec;
         Rectangle wueRec;
+        Rectangle rueRec;
+        Rectangle eueRec;
         
 
         int[] currentLeveldata;
@@ -164,12 +168,16 @@ namespace FakeArcade1
 
         protected override void LoadContent()
         {
+            //Graphic load for both HUD and Menu.
 
             success = Content.Load<Texture2D>("success");
             defeat = Content.Load<Texture2D>("defeat");
             gameend = Content.Load<Texture2D>("gameover");
             pushQ = Content.Load<Texture2D>("pushit");
-            pushW = Content.Load<Texture2D>("pushit");
+            pushW = Content.Load<Texture2D>("pushitW");
+            pushR = Content.Load<Texture2D>("pushitR");
+            pushE = Content.Load<Texture2D>("pushitE");
+
 
             menu_title = Content.Load<Texture2D>("menuitem_title");
             menu_play = Content.Load<Texture2D>("menuitem_playgame");
@@ -198,6 +206,8 @@ namespace FakeArcade1
             gamRec = new((int)Math.Floor(maxWidth * .50d - gameend.Width / 2.0d), (int)Math.Floor(maxHeight * .50d - gameend.Height / 2.0d), gameend.Width, gameend.Height);
             queRec = new(0, 0, pushQ.Width, pushQ.Height);
             wueRec = new(pushQ.Width, 0, pushQ.Width, pushQ.Height);
+            rueRec = new(pushQ.Width * 2, 0, pushQ.Width, pushQ.Height);
+            eueRec = new(pushQ.Width * 3, 0, pushQ.Width, pushQ.Height);
 
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -223,10 +233,12 @@ namespace FakeArcade1
             {
                 menu.Update(kstate,gameTime);
 
-                if(menu.startGame)
+                if(menu.startGame) // create first level if start game attribute has been set to true.
                 {
+                    spawn_count = menu.spawning;
                     currentLeveldata = levels[levelCounter];
-                    currentLevel = new(Services, currentLeveldata, _graphics, (int)Math.Floor(maxWidth * .50d), (int)Math.Floor(maxHeight * .50d), spawn_count, 1.0f); 
+                    currentLevel = new(Services, currentLeveldata, _graphics, (int)Math.Floor(maxWidth * .50d), (int)Math.Floor(maxHeight * .50d), spawn_count, 1.0f);
+                    
                     inMenu = false;
                 }
 
@@ -238,7 +250,7 @@ namespace FakeArcade1
 
             if (!inMenu)
             {
-                
+                //Level change logic.
 
 
                 if (currentLevel.level_done && levels.Length > levelCounter && !gameover)
@@ -262,13 +274,30 @@ namespace FakeArcade1
                 if (currentLevel.getPlayer().Dead() && currentLevel.RestartLevel())
                 {
                     float xpos = .50f * maxWidth;
-                    float ypos = .50f * maxHeight;
+                    float ypos = .50f * maxHeight; //reposition character in middle of screen if level gets restarted.
                     currentLevel.Dispose();
                     currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count, 1.0f);
                 }
 
+                if (gameover && !currentLevel.getPlayer().Dead())
+                {
+                    if(kstate.IsKeyDown(Keys.E))
+                    {
+                        float xpos = .50f * maxWidth;
+                        float ypos = .50f * maxHeight;
+                        spawn_count += 1;
+                        currentLevel.Dispose();
+                        levelCounter = 0;
+                        currentLeveldata = levels[levelCounter];
+                        currentLevel = new(Services, currentLeveldata, _graphics, (int)xpos, (int)ypos, spawn_count, 1.0f);
+                        gameover = false;
+                    }
+                }
+
                 currentLevel.Update(gameTime, kstate);
             }
+
+            
 
             base.Update(gameTime);
         }
@@ -283,8 +312,8 @@ namespace FakeArcade1
 
             
 
-
-            if(inMenu)
+            //Draw menu if we are in menu.
+            if(inMenu) 
             {
                 menu.Draw(gameTime,_spriteBatch,1.0f,GraphicsDevice);
                 _spriteBatch.Draw(menu_title, new Vector2((maxWidth * .5f),0), Color.AliceBlue);
@@ -302,7 +331,7 @@ namespace FakeArcade1
 
                 if (!currentLevel.areEnemiesRemaining() && !gameover)
                 {
-                    _spriteBatch.Draw(success, defRec, Color.White);
+                    _spriteBatch.Draw(success, sucRec, Color.White);
                 }
 
                 if (gameover)
@@ -319,13 +348,25 @@ namespace FakeArcade1
                 {
                     _spriteBatch.Draw(pushW, wueRec, Color.White);
                 }
+
+                if(currentLevel.getPlayer().Dead())
+                {
+                    _spriteBatch.Draw(pushR, rueRec, Color.White);
+                }
+
+                if(!currentLevel.getPlayer().Dead() && gameover)
+                {
+                    _spriteBatch.Draw(pushE, eueRec, Color.White);
+                }
             }
+
+
             _spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Blue);
 
-            //_spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
+            
             _spriteBatch.Begin();
             _spriteBatch.Draw(_nativeTarget, boxingRect, Color.White);
             _spriteBatch.End();

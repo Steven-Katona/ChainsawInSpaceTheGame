@@ -198,11 +198,12 @@ namespace FakeArcade1.GameStuff
 
                 }
 
-                
-                
 
-           
-                do_Movement_set_Direction(current_movement, gameTime);
+
+                if(!((getPosition().X + current_movement.Item1 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds) > maxWidth) && !(getPosition().Y + (current_movement.Item2 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds) > maxHeight))
+                {
+                    do_Movement_set_Direction(current_movement, gameTime);
+                }
 
                 if (keyboardState.IsKeyDown(Keys.Q) && cooldown <= 0)
                 {
@@ -251,7 +252,7 @@ namespace FakeArcade1.GameStuff
 
             if(Dead())
             {
-                chainSpd = 0;
+                chainSpd = 0; // you can not move if you are dead!
             }
 
             if (activeWeapon)
@@ -300,8 +301,10 @@ namespace FakeArcade1.GameStuff
 
         public void do_Movement_set_Direction((int,int) where, GameTime gameTime)
         {
-            (float, float) moving = new(where.Item1*chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds, where.Item2*chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            
+            (float, float) moving = new(where.Item1 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds, where.Item2 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds);
             moveAllBoxes(moving);
+            
             
             if (!where.Equals((0, 0)))
             {

@@ -40,7 +40,7 @@ namespace FakeArcade1.GameStuff
 
         public Enemy(Texture2D thisTexture, int x, int y, int realWidth, int realHeight, int trigger, int count, float frame_speed, Vector2 terminal, int maxWidth, int maxHeight) : base(thisTexture, x, y, realWidth, realHeight, frame_speed, count)
         {
-            //setDimensions(x, y, realWidth, realHeight); redundant!
+      
             variable_Terminal= terminal;
             calc = new PublicCalculations();
             rand = new Random();
@@ -52,7 +52,7 @@ namespace FakeArcade1.GameStuff
         public void setTerminal(Vector2 newTerminal)
         {
 
-            variable_Terminal = newTerminal;
+            variable_Terminal = newTerminal; //used specifically with projectiles.
 
         }
 
@@ -85,8 +85,8 @@ namespace FakeArcade1.GameStuff
 
 
 
-        abstract public void trigger_behavior();
-        abstract public void zero_trigger_behavior();
+        abstract public void trigger_behavior(); //denotes behavior that a certain enemy will take once it has reached a certain location along the x axis
+        abstract public void zero_trigger_behavior(); //denotes behavior that a certain enemy will take once it exited the screen on the left side.
 
         public abstract void preUpdateLogic(GameTime gameTime, Player player);
 

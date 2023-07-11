@@ -36,6 +36,9 @@
     <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/page3.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/planet_battery_sheet.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/pushit.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/pushitE.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/pushitR.png</File>
+    <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/pushitW.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/realProtagonist.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/realSaw.png</File>
     <File>C:/Users/steve/source/repos/FakeArcade1/FakeArcade1/Content/realSawLeft.png</File>
@@ -58,6 +61,9 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>defeat.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -66,3 +66,6 @@ C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\men
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\menuitem_Steven.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\menuitem_title.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\menuitem_w.xnb
+C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\pushitR.xnb
+C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\pushitW.xnb
+C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Debug\net6.0\Content\pushitE.xnb

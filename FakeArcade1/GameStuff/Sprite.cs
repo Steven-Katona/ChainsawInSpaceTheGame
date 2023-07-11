@@ -37,10 +37,6 @@ namespace FakeArcade1.GameStuff
             width = (int)Math.Floor(scl * width);
             height = (int)Math.Floor(scl * height);
 
-            //var firstWidth = new Color[x];
-            //thisTexture.GetData<Color>(firstWidth, 0, x);
-
-            
             
             origin = (new Vector2(bounds.Width / 2.0f, bounds.Height / 2.0f));
             bounds = new Rectangle(((int)origin.X), ((int)origin.Y), width, height);
