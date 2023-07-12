@@ -140,7 +140,7 @@ namespace FakeArcade1.GameStuff
 
         }
 
-        public (int, int) getSelection(int selection)
+        public (int, int) getSelection(int selection) //menu is represented as an array of textures that are selected and displayed using this select statement.
         {
             int returnValue = 0;
             int displayValue = 4;
