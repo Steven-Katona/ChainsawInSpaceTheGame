@@ -16,6 +16,7 @@ namespace FakeArcade1.GameStuff
         private float time;
         private int variableHeight;
         private int variableWidth;
+        private float draw_priority;
         //private VertexPositionColor[] hitboxVertex;
 
         public Animation getCurrentAnimation()
@@ -34,6 +35,11 @@ namespace FakeArcade1.GameStuff
             frameIndex = 0;
             time = 0;
 
+        }
+
+        public void setDrawPriority(float value)
+        {
+            draw_priority = value;
         }
 
         
@@ -63,7 +69,7 @@ namespace FakeArcade1.GameStuff
             }
 
             Rectangle source = new(frameIndex * variableWidth, 0, variableWidth, variableHeight);
-            spriteBatch.Draw(getCurrentAnimation().getTexture(), position, source, Color.White, 0.0f, new Vector2(variableWidth / 2.0f, getCurrentAnimation().getTexture().Bounds.Height / 2.0f), 1.0f, spriteEffects, 0.0f); //position??
+            spriteBatch.Draw(getCurrentAnimation().getTexture(), position, source, Color.White, 0.0f, new Vector2(variableWidth / 2.0f, getCurrentAnimation().getTexture().Bounds.Height / 2.0f), 1.0f, spriteEffects, draw_priority); //position??
         }
     }
 }

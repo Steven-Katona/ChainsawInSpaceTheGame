@@ -410,7 +410,9 @@ namespace FakeArcade1.GameStuff
         {
             
             Texture2D bullet = content.Load<Texture2D>("bullet_sprite_sheet");
-            to_be_Added.Add(new Projectile(bullet,  x,  y, 78, 64, 0, 4, .20f, new Vector2 ((float)mainCharacter.getPosition().X,(float)mainCharacter.getPosition().Y), maxWidth, maxHeight));
+            Projectile dangerous_bullet = new Projectile(bullet, x, y, 78, 64, 0, 4, .20f, new Vector2((float)mainCharacter.getPosition().X, (float)mainCharacter.getPosition().Y), maxWidth, maxHeight);
+            dangerous_bullet.myAnimationPlayer.setDrawPriority(1.0f);
+            to_be_Added.Add(dangerous_bullet);
                 
         }
 

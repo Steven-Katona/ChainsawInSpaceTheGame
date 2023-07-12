@@ -53,6 +53,11 @@ namespace FakeArcade1.GameStuff
             myAnimation = animate;
         }
 
+        public void autoHitbox()
+        {
+
+        }
+
         public void givePlayerAnimation(Animation animation)
         {
             myAnimationPlayer.animationPlay(animation);

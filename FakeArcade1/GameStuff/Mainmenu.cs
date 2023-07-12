@@ -69,23 +69,35 @@ namespace FakeArcade1.GameStuff
 
         public void Update(KeyboardState keys, GameTime gameTime)
         {
-            if (keys.IsKeyDown(Keys.NumPad2) && !currentlyPressed)
+            if ((keys.IsKeyDown(Keys.NumPad2) || (keys.IsKeyDown(Keys.Down))) && !currentlyPressed)
             {
                 if (currentSelection < (startingChoice + possibleChoices))
                 {
                     currentSelection = (currentSelection += 1);
                     currentlyPressed = true;
-                    currentKey = Keys.NumPad2;
+
+                    if (keys.IsKeyDown(Keys.NumPad2))
+                        currentKey = Keys.NumPad2;
+                    else
+                    {
+                        currentKey = Keys.Down;
+                    }
                 }
             }
 
-            if(keys.IsKeyDown(Keys.NumPad8) && !currentlyPressed)
+            if((keys.IsKeyDown(Keys.NumPad8) || (keys.IsKeyDown(Keys.Up))) && !currentlyPressed)
             {
                 if (currentSelection > startingChoice)
                 {
                     currentSelection -= 1;
                     currentlyPressed = true;
-                    currentKey = Keys.NumPad8;
+
+                    if(keys.IsKeyDown(Keys.NumPad8))
+                        currentKey = Keys.NumPad8;
+                    else
+                    {
+                        currentKey = Keys.Up;
+                    }
                 }
             }
 

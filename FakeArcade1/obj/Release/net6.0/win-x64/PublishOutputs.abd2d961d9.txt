@@ -31,6 +31,7 @@ C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\p
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/page3.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/planet_battery_sheet.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/pushit.xnb
+C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/pushitE.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/pushitR.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/pushitW.xnb
 C:\Users\steve\source\repos\FakeArcade1\FakeArcade1\bin\Release\net6.0\win-x64\publish\Content/realProtagonist.xnb

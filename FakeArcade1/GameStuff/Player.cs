@@ -27,6 +27,10 @@ namespace FakeArcade1.GameStuff
         Keys go_down = Keys.NumPad2;
         Keys go_left = Keys.NumPad4;
         Keys go_right = Keys.NumPad6;
+        Keys go_up2 = Keys.Up;
+        Keys go_down2 = Keys.Down;
+        Keys go_left2 = Keys.Left;
+        Keys go_right2 = Keys.Right;
         Keys lastpressed;
         Dictionary<Keys, (int, int)> where_to_go;
         (int, int) current_movement;
@@ -52,9 +56,15 @@ namespace FakeArcade1.GameStuff
                 { go_up, (0, -1) },
                 { go_down, (0, 1) },
                 { go_right, (1, 0) },
-                { go_left, (-1, 0) }
+                { go_left, (-1, 0) },
+                { go_up2, (0, -1) },
+                { go_down2, (0, 1) },
+                { go_right2, (1, 0) },
+                { go_left2, (-1, 0) }
+
             };
-            
+
+            lastpressed = go_right;
             direction = new Point(0, 1);
             setRectangle(new Rectangle((int)getPosition().X - 52, (int)getPosition().Y - (int)getHeight() / 2, 30, 30));
             hurtBox = new((int)getPosition().X - 22, (int)getPosition().Y - (int)getHeight() / 2, 84, 35);
@@ -113,7 +123,7 @@ namespace FakeArcade1.GameStuff
             {
                 cooldown = cooldown -= gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (keyboardState.IsKeyDown(go_right))
+                if (keyboardState.IsKeyDown(go_right) || keyboardState.IsKeyDown(go_right2))
                 {
                     where_to_go.TryGetValue(go_right, out current_movement);
 
@@ -125,7 +135,7 @@ namespace FakeArcade1.GameStuff
                     lastpressed = go_right;
                 }
 
-                if (keyboardState.IsKeyDown(go_left))
+                if (keyboardState.IsKeyDown(go_left) || keyboardState.IsKeyDown(go_left2))
                 {
                     where_to_go.TryGetValue(go_left, out current_movement);
 
@@ -137,12 +147,12 @@ namespace FakeArcade1.GameStuff
                     lastpressed = go_left;
                 }
 
-                if (keyboardState.IsKeyDown(go_up))
+                if (keyboardState.IsKeyDown(go_up) || keyboardState.IsKeyDown(go_up2))
                 {
                     where_to_go.TryGetValue(go_up, out current_movement);
                 }
 
-                if (keyboardState.IsKeyDown(go_down))
+                if (keyboardState.IsKeyDown(go_down) || keyboardState.IsKeyDown(go_down2))
                 {
                     where_to_go.TryGetValue(go_down, out current_movement);
                 }
@@ -161,12 +171,12 @@ namespace FakeArcade1.GameStuff
                     }
                 }
 
-                if(lastpressed == go_right) 
+                if(lastpressed == go_right || lastpressed == go_right2) 
                 { 
                     setRectangle(new Rectangle((int)getPosition().X - 52, (int)getPosition().Y - (int)getHeight() / 2, 30, 30));
                     setHurtBox(new Rectangle((int)getPosition().X - 22, (int)getPosition().Y - (int)getHeight() / 2, 84, 35));
                 }
-                if(lastpressed == go_left) 
+                if(lastpressed == go_left || lastpressed == go_left2) 
                 {
                     setRectangle(new Rectangle((int)getPosition().X + 22, (int)getPosition().Y - (int)getHeight() / 2, 30, 30));
                     setHurtBox(new Rectangle((int)getPosition().X - 56, (int)getPosition().Y - (int)getHeight() / 2, 84, 35));
@@ -200,7 +210,9 @@ namespace FakeArcade1.GameStuff
 
 
 
-                if(!((getPosition().X + current_movement.Item1 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds) > maxWidth) && !(getPosition().Y + (current_movement.Item2 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds) > maxHeight))
+
+
+                if (!((getPosition().X + current_movement.Item1 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds) > maxWidth) && !(getPosition().Y + (current_movement.Item2 * chainSpd * (float)gameTime.ElapsedGameTime.TotalSeconds) > maxHeight))
                 {
                     do_Movement_set_Direction(current_movement, gameTime);
                 }
