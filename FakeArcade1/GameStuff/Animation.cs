@@ -34,8 +34,8 @@ namespace FakeArcade1.GameStuff
             this.frameTime = frameTime;
             this.isLooping = isLooping;
             this.size_offset = size_offset;
-            double frameC = (size_offset / getTexture().Bounds.Height);
-            this.frameCount= count;
+            double frameC = (size_offset / getTexture().Bounds.Height); //base animation class. Requires hardcoded size-offset which is not ideal. 
+            this.frameCount= count; // sprite sheets are represented as horizontal panels where height indicates in_game height but width must be divided by amount of frames.
 
           
         }

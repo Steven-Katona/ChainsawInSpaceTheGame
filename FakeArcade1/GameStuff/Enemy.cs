@@ -88,9 +88,9 @@ namespace FakeArcade1.GameStuff
         abstract public void trigger_behavior(); //denotes behavior that a certain enemy will take once it has reached a certain location along the x axis
         abstract public void zero_trigger_behavior(); //denotes behavior that a certain enemy will take once it exited the screen on the left side.
 
-        public abstract void preUpdateLogic(GameTime gameTime, Player player);
+        public abstract void preUpdateLogic(GameTime gameTime, Player player); //logic that will assist update logic 
 
-        public abstract void preUpdateLogic(GameTime gameTime, ContentManager content, Player player);
+        public abstract void preUpdateLogic(GameTime gameTime, ContentManager content, Player player); //logic that will assist update logic, but also needs control of loading sprites.
 
         public void resetZeroBehavior()
         {

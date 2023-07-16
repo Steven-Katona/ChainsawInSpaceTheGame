@@ -150,7 +150,7 @@ namespace FakeArcade1.GameStuff
         }
 
         public abstract void Update(GameTime gameTime);
-        //public abstract void Update(GameTime gameTime, KeyboardState keyboardState, int maxWidth, int maxHeight);
+        
 
 
 

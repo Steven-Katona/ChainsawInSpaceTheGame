@@ -82,12 +82,12 @@ namespace FakeArcade1.GameStuff
 
         public Player(Texture2D thisTexture, Rectangle bounds) : base(thisTexture,bounds)
         {
-            generic_To_Do();
+            generic_To_Do(); // sunset constructor
         }
 
         public Player(Texture2D thisTexture, int x, int y, int realWidth, int realHeight, float frame_speed, int count) : base(thisTexture, x,y,realWidth,realHeight, frame_speed, count)
         {
-            //scl = .8;
+            //generic_to_do gives both constructors the same logic despite being two different constructors (and despite the fact that one is never used)
             generic_To_Do();
         }
 
@@ -171,7 +171,7 @@ namespace FakeArcade1.GameStuff
                     }
                 }
 
-                if(lastpressed == go_right || lastpressed == go_right2) 
+                if(lastpressed == go_right || lastpressed == go_right2) //code that determines the hitbox for the chainsaw depending on which side it is facing. Not pretty. Hitbox should definitely be its own class. This method does not allow resizing for other video modes.
                 { 
                     setRectangle(new Rectangle((int)getPosition().X - 52, (int)getPosition().Y - (int)getHeight() / 2, 30, 30));
                     setHurtBox(new Rectangle((int)getPosition().X - 22, (int)getPosition().Y - (int)getHeight() / 2, 84, 35));

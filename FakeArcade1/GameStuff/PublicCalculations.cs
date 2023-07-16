@@ -9,7 +9,7 @@ namespace FakeArcade1.GameStuff
 {
     public class PublicCalculations
     {
-        public (float, float) newDirection(int x, int y, Vector2 terminal)
+        public (float, float) newDirection(int x, int y, Vector2 terminal) //used for determining projectile direction. 
         {
             double dirX = terminal.X - (double)x;
             double dirY = terminal.Y - (double)y;

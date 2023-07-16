@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FakeArcade1.GameStuff
 {
-    internal class Debris : Sprite
+    internal class Debris : Sprite //This class draws the enemies that are defeated, falling off screen.
     {
         protected int speed;
         protected (float, float) moving;

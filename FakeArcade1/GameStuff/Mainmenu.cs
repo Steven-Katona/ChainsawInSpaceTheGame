@@ -57,10 +57,10 @@ namespace FakeArcade1.GameStuff
 
             menuLocations[0] = new Vector2(maxW * .10f, maxH * .10f);
             menuLocations[1] = new Vector2(maxW * .10f, maxH * .30f);
-            menuLocations[2] = new Vector2(maxW * .10f, maxH * .60f);
-            menuLocations[3] = new Vector2(maxW * .60f, maxH * .18f);
-            menuLocations[4] = new Vector2(maxW * .40f, maxH * .30f);
-            menuLocations[5] = new Vector2(maxW * .40f, maxH * .60f);
+            menuLocations[2] = new Vector2(maxW * .10f, maxH * .50f);
+            menuLocations[3] = new Vector2(maxW * .40f, maxH * .30f);
+            menuLocations[4] = new Vector2(maxW * .40f, maxH * .50f);
+            menuLocations[5] = new Vector2(maxW * .40f, maxH * .70f);
 
             centerofScreen = new(maxW - (maxW / 2.0f), maxH - (maxH / 2.0f));
             backgroundTile = background;
@@ -129,7 +129,7 @@ namespace FakeArcade1.GameStuff
 
             for(int texture = startingChoice; texture < startingChoice + possibleChoices; texture++)
             {
-                spriteBatch.Draw(menuItems[texture], menuLocations[locations], Color.White);
+                spriteBatch.Draw(menuItems[texture], menuLocations[locations], Color.White); // draws only the items that are within 
                 if (texture == currentSelection)
                 {
                     cursorDraw.Draw(gameTime, spriteBatch, menuLocations[locations], SpriteEffects.None);

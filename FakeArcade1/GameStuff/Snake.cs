@@ -41,14 +41,12 @@ namespace FakeArcade1.GameStuff
         public override void trigger_behavior()
         {
             speed = 0;
-            //move_Position((getPosition().X + getWidth(), getPosition().Y));
             dormant = true;
         }
 
         public override void zero_trigger_behavior()
         {
             speed = 0;
-            //move_Position((getPosition().X - getWidth(), getPosition().Y));
             dormant = true;
             
         }
@@ -79,7 +77,7 @@ namespace FakeArcade1.GameStuff
             resetZeroBehavior();
         }
 
-        public override void preUpdateLogic(GameTime gameTime, Player player)
+        public override void preUpdateLogic(GameTime gameTime, Player player) 
         { }
 
         public override void preUpdateLogic(GameTime gameTime, ContentManager content, Player player)

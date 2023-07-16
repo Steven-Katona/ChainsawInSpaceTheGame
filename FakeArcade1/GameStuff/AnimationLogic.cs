@@ -17,7 +17,6 @@ namespace FakeArcade1.GameStuff
         private int variableHeight;
         private int variableWidth;
         private float draw_priority;
-        //private VertexPositionColor[] hitboxVertex;
 
         public Animation getCurrentAnimation()
         {

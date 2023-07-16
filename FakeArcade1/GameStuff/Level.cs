@@ -61,9 +61,11 @@ namespace FakeArcade1.GameStuff
             to_be_Added= new List<Sprite>();
             maxHeight = _graphics.PreferredBackBufferHeight;
             maxWidth= _graphics.PreferredBackBufferWidth;
+
             background[0] = content.Load<Texture2D>("page1");
             background[1] = content.Load<Texture2D>("page2");
             background[2] = content.Load<Texture2D>("page3");
+            // hardcoded background, not ideal but since there is only one background...
             backgroundSpeed = .70d;
             backgroundTimer = 0d;
             backgroundCounter = 0;
@@ -237,7 +239,7 @@ namespace FakeArcade1.GameStuff
                 }
 
 
-                if(enemy as Enemy != null)
+                if(enemy as Enemy != null) // only a small amount of collisions to keep track of:
                 {
                     Enemy this_enemy = (Enemy)enemy;
 
@@ -249,7 +251,7 @@ namespace FakeArcade1.GameStuff
                         {
                             to_be_Added.Add(new Debris(this_enemy.getDeadTexture(), (int)this_enemy.getPosition().X, (int)this_enemy.getPosition().Y, this_enemy.getDeadTexture().Width, this_enemy.getDeadTexture().Height, 50f, 2, mainCharacter.getFacing(), maxHeight));
                         }
-                        mainCharacter.killCount++;
+                        mainCharacter.killCount++; // counter that determines special move usability.
                     }
 
                     if (this_enemy.willEnemyShoot())
@@ -292,15 +294,15 @@ namespace FakeArcade1.GameStuff
                 }
 
                 enemy.Update(gameTime);
-            }   //end of enemy List foreach!
+            }   
 
 
-            foreach (Sprite trash in to_be_Removed)
+            foreach (Sprite trash in to_be_Removed) // dead enemies are removed 
             {
                enemy_squad.Remove(trash);
             }
 
-            foreach (Sprite spawn in to_be_Added)
+            foreach (Sprite spawn in to_be_Added) // new enemies are added last
             {
                 enemy_squad.Add(spawn);
             }
@@ -320,7 +322,7 @@ namespace FakeArcade1.GameStuff
                     Snake snk = new (smake, (int)Math.Ceiling(maxWidth + 255 / 2.0f), (int)Math.Ceiling(y_loc * 0.01f * maxHeight), 255, 64, (int)Math.Ceiling(trigger_control * maxWidth * 0.01f), 3, 0.20f, new Vector2(mainCharacter.getPosition().X, mainCharacter.getPosition().Y), maxWidth, maxHeight);
                     snk.setDeathTexture(deadsmake);
                     to_be_Added.Add(snk);
-                    break;//use x_max and y_max as the generic starting points for the monster but use a more robust method to spawn
+                    break;
 
                 case 1:
                     Texture2D smull = content.Load<Texture2D>("planet_battery_sheet");
@@ -344,7 +346,7 @@ namespace FakeArcade1.GameStuff
                     catz.setDeathTexture(deadCat);
                     to_be_Added.Add(catz);
                     break;
-               case 4:
+               case 4: // case 4 through 7 use the previous cases and the function parameters to do large spawns of multiple monsters.
                     steps = trigger_control;
                     for(int x = 0; x < y_loc; x++)
                     {
@@ -432,7 +434,7 @@ namespace FakeArcade1.GameStuff
             if (!mainCharacter.Dead())
             {
                 mainCharacter.Draw(gameTime, spriteBatch);
-            }//I character is alive draw them to the screen!
+            }//If character is alive draw them to the screen!
 
             if (mainCharacter.activeWeapon || !mainCharacter.activeWeapon)
             {
@@ -467,6 +469,8 @@ namespace FakeArcade1.GameStuff
 
                 //_spriteBatch.Draw(player.myAnimation.Draw());
                 spriteBatch.Draw(rectText, ColorPos, Color.White);*/
+
+                // Uncommenting these lines will draw hit boxes around enemies. Major hit to performance, not optimal.
             }
 
         }
